@@ -1,3 +1,42 @@
+" Specify a directory for plugins
+" - For Neovim: stdpath('data') . '/plugged'
+" - Avoid using standard Vim directory names like 'plugin'
+call plug#begin('~/.vim/plugged')
+
+" Make sure you use single quotes
+
+" Shorthand notation; fetches https://github.com/vim-airline/vim-airline 
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+" fzf fuzzy finder
+Plug '/usr/local/opt/fzf'
+" git-gutter plugin
+Plug 'airblade/vim-gitgutter'
+" NERDtree plugin
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" Commentry plugin for commenting
+Plug 'tpope/vim-commentary'
+" Git plugin
+Plug 'tpope/vim-fugitive'
+" COC Plugin for language server
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Syntax highlighting plugin for typescript
+Plug 'HerringtonDarkholme/yats.vim'
+" Theme plugin
+Plug 'morhetz/gruvbox'
+" Fuzzy finder plugin
+Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
+" icons for nerdtree
+Plug 'ryanoasis/vim-devicons'
+" Plugin to show indent lines
+Plug 'Yggdroot/indentLine'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+" Initialize plugin system
+call plug#end()
+
+
 " General settings
 set encoding=utf-8
 " Leader
@@ -14,9 +53,79 @@ set laststatus=2  " Always display the status line
 set autowrite     " Automatically :write before running commands
 set modelines=0   " Disable modelines as a security precaution
 set nomodeline
-" set termguicolors
+set ttimeoutlen=10
 syntax on
 filetype plugin indent on
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" When the type of shell script is /bin/sh, assume a POSIX-compatible
+" shell for syntax highlighting purposes.
+let g:is_posix = 1
+
+" Softtabs, 2 spaces
+set tabstop=2
+set shiftwidth=2
+set shiftround
+set expandtab
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+" Use one space, not two, after punctuation.
+set nojoinspaces
+
+" Make it obvious where 80 characters is
+set textwidth=80
+
+" Numbers
+:set number relativenumber
+:set numberwidth=5
+
+" Set spellfile to location that is guaranteed to exist, can be symlinked to
+" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
+set spellfile=$HOME/.vim-spell-en.utf-8.add
+
+" Autocomplete with dictionary words when spell check is on
+set complete+=kspell
+
+" Always use vertical diffs
+set diffopt+=vertical
+
+" if hidden is not set, TextEdit might fail.
+set hidden
+
+" Some servers have issues with backup files, see #649
+set nobackup
+set nowritebackup
+
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+set signcolumn=yes
+
+" Treat <li> and <p> tags like the block tags they are
+let g:html_indent_tags = 'li\|p'
+
+" Theme and colorscheme settings
+
+" set background=dark
+" colorscheme onehalfdark
+" let g:airline_theme='onehalfdark'
+let g:airline_powerline_fonts = 1
+
+set background=dark
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
 
 augroup vimrcEx
   autocmd!
@@ -38,21 +147,6 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile vimrc.local set filetype=vim
 augroup END
 
-" When the type of shell script is /bin/sh, assume a POSIX-compatible
-" shell for syntax highlighting purposes.
-let g:is_posix = 1
-
-" Softtabs, 2 spaces
-set tabstop=2
-set shiftwidth=2
-set shiftround
-set expandtab
-
-" Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
-
-" Use one space, not two, after punctuation.
-set nojoinspaces
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 if executable('ag')
@@ -68,13 +162,6 @@ if executable('ag')
   endif
 endif
 
-" Make it obvious where 80 characters is
-set textwidth=80
-
-
-" Numbers
-:set number relativenumber
-:set numberwidth=5
 :augroup numbertoggle
 :  autocmd!
 :  autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
@@ -115,13 +202,6 @@ nnoremap <silent> <Leader>gt :TestVisit<CR>
 " Run commands that require an interactive shell
 nnoremap <Leader>r :RunInInteractiveShell<Space>
 
-" Treat <li> and <p> tags like the block tags they are
-let g:html_indent_tags = 'li\|p'
-
-" Open new split panes to right and bottom, which feels more natural
-set splitbelow
-set splitright
-
 " Quicker window movement
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
@@ -132,73 +212,15 @@ nnoremap <C-l> <C-w>l
 nnoremap ]r :ALENextWrap<CR>
 nnoremap [r :ALEPreviousWrap<CR>
 
-" Map Ctrl + p to open fuzzy find (FZF)
-nnoremap <c-p> :Files<cr>
 
 " Remap Esc key to ii
-:imap ii <Esc>
+imap ii <Esc>
 
-" Set spellfile to location that is guaranteed to exist, can be symlinked to
-" Dropbox or kept in Git and managed outside of thoughtbot/dotfiles using rcm.
-set spellfile=$HOME/.vim-spell-en.utf-8.add
+" Quickly edit/reload this configuration file
+nnoremap gev :e $MYVIMRC<CR>
+nnoremap gsv :so $MYVIMRC<CR>
 
-" Autocomplete with dictionary words when spell check is on
-set complete+=kspell
-
-" Always use vertical diffs
-"set diffopt+=vertical
-
-" Local config
-if filereadable($HOME . "/.vimrc.local")
-  source ~/.vimrc.local
-endif
-
-" Specify a directory for plugins
-" - For Neovim: stdpath('data') . '/plugged'
-" - Avoid using standard Vim directory names like 'plugin'
-call plug#begin('~/.vim/plugged')
-
-" Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/vim-airline/vim-airline 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-" fzf fuzzy finder
-Plug '/usr/local/opt/fzf'
-" git-gutter plugin
-Plug 'airblade/vim-gitgutter'
-" NERDtree plugin
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
-" Commentry plugin for commenting
-Plug 'tpope/vim-commentary'
-" COC Plugin for language server
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-" Syntax highlighting plugin for typescript
-Plug 'HerringtonDarkholme/yats.vim'
-" Theme plugin
-Plug 'morhetz/gruvbox'
-" Fuzzy finder plugin
-Plug 'ctrlpvim/ctrlp.vim' " fuzzy find files
-" icons for nerdtree
-Plug 'ryanoasis/vim-devicons'
-" Plugin to show indent lines
-Plug 'Yggdroot/indentLine'
-Plug 'sonph/onehalf', {'rtp': 'vim/'}
-" Initialize plugin system
-call plug#end()
-
-" set background=dark
-" colorscheme onehalfdark
-" let g:airline_theme='onehalfdark'
-
-" let g:solarized_termcolors=256
-set background=dark
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
-
-map <C-s> :source ~/.vimrc<CR>
+" NERDtree settings
 " Open NERDtree on vim startup
 " autocmd vimenter * NERDTree
 " autocmd StdinReadPre * let s:std_in=1
@@ -207,20 +229,8 @@ map <C-s> :source ~/.vimrc<CR>
 
 map <C-n> :NERDTreeToggle<CR>
 
-" netrw custom settings similar to NERDtree
-"let g:netrw_banner = 0
-"let g:netrw_liststyle = 3
-"let g:netrw_browse_split = 4
-"let g:netrw_altv = 1
-"let g:netrw_winsize = 25
-"augroup ProjectDrawer
-"  autocmd!
-"  autocmd VimEnter * :Vexplore
-"augroup END
-
-
-" " sync open file with NERDTree
-" " " Check if NERDTree is open or active
+" sync open file with NERDTree
+" Check if NERDTree is open or active
 " function! IsNERDTreeOpen()
 "   return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
 " endfunction
@@ -238,12 +248,33 @@ map <C-n> :NERDTreeToggle<CR>
 " autocmd BufEnter * call SyncTree()
 
 " ctrlp
+" Setup some default ignores
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/](\.(git|hg|svn)|\_site)$',
+  \ 'file': '\v\.(exe|so|dll|class|png|jpg|jpeg)$',
+\}
+
+" Use the nearest .git directory as the cwd
+" This makes a lot of sense if you are working on a project that is in version
+" control. It also supports works with .svn, .hg, .bzr.
+let g:ctrlp_working_path_mode = 'r'
+
 let g:ctrlp_user_command = ['.git/', 'git --git-dir=%s/.git ls-files -oc --exclude-standard']
+
+" Map Ctrl + p to open fuzzy find (FZF)
+" nnoremap <c-p> :Files<cr>
+" Use a leader instead of the actual named binding
+" nmap <leader>p :CtrlP<cr>
+
+" Easy bindings for its various modes
+nmap <leader>bb :CtrlPBuffer<cr>
+nmap <leader>bm :CtrlPMixed<cr>
+nmap <leader>bs :CtrlPMRU<cr>
 
 "Config for vim-airline
 let g:airline#extensions#tabline#enabled = 1
-" COnfiguration for coc.nvim
-" coc config
+
+" Configuration for coc.nvim
 let g:coc_global_extensions = [
   \ 'coc-snippets',
   \ 'coc-pairs',
@@ -252,25 +283,11 @@ let g:coc_global_extensions = [
   \ 'coc-prettier', 
   \ 'coc-json', 
   \ ]
-" from README
-" if hidden is not set, TextEdit might fail.
-set hidden
 
-" Some servers have issues with backup files, see #649
-set nobackup
-set nowritebackup
+"Keymapping for integrated terminal
+nnoremap <c-`>  :below terminal<CR>
 
-" Better display for messages
-set cmdheight=2
-
-" You will have bad experience for diagnostic messages when it's default 4000.
-set updatetime=300
-
-" don't give |ins-completion-menu| messages.
-set shortmess+=c
-
-" always show signcolumns
-set signcolumn=yes
+" Coc settings from README
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -382,5 +399,3 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-"Keymapping for integrated terminal
-nnoremap <c-`>  :below terminal<CR>
