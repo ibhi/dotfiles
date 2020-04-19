@@ -33,6 +33,9 @@ Plug 'ryanoasis/vim-devicons'
 " Plugin to show indent lines
 Plug 'Yggdroot/indentLine'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 " Initialize plugin system
 call plug#end()
 
@@ -121,7 +124,6 @@ let g:html_indent_tags = 'li\|p'
 " set background=dark
 " colorscheme onehalfdark
 " let g:airline_theme='onehalfdark'
-let g:airline_powerline_fonts = 1
 
 set background=dark
 let g:gruvbox_contrast_dark = 'hard'
@@ -208,6 +210,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+
 " Move between linting errors
 nnoremap ]r :ALENextWrap<CR>
 nnoremap [r :ALEPreviousWrap<CR>
@@ -271,8 +274,32 @@ nmap <leader>bb :CtrlPBuffer<cr>
 nmap <leader>bm :CtrlPMixed<cr>
 nmap <leader>bs :CtrlPMRU<cr>
 
+" Keymappings for easy buffer management
+" To open a new empty buffer
+" This replaces :tabnew which I used to bind to this mapping
+nmap <leader>T :enew<cr>
+
+" Move to the next buffer
+nmap <leader>l :bnext<CR>
+
+" Move to the previous buffer
+nmap <leader>h :bprevious<CR>
+
+" Close the current buffer and move to the previous one
+" This replicates the idea of closing a tab
+nmap <leader>bq :bp <BAR> bd #<CR>
+
+" Show all open buffers and their status
+nmap <leader>bl :ls<CR>
+
+
 "Config for vim-airline
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#buffer_nr_show = 1
+let g:airline_powerline_fonts = 1
+
+"Keymapping for integrated terminal
+nmap <leader>bt  :below terminal<CR>
 
 " Configuration for coc.nvim
 let g:coc_global_extensions = [
@@ -284,8 +311,6 @@ let g:coc_global_extensions = [
   \ 'coc-json', 
   \ ]
 
-"Keymapping for integrated terminal
-nnoremap <c-`>  :below terminal<CR>
 
 " Coc settings from README
 
@@ -399,3 +424,9 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
+
+" Markdown preview settings
+" set to 1, the vim will refresh markdown when save the buffer or
+" leave from insert mode
+let g:mkdp_refresh_slow = 1
+let g:mkdp_markdown_css = '~/.vim/markdown/github-markdown.css'
