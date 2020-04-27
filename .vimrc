@@ -10,6 +10,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 " fzf fuzzy finder
 Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 " git-gutter plugin
 Plug 'airblade/vim-gitgutter'
 " NERDtree plugin
@@ -23,7 +24,8 @@ Plug 'tpope/vim-fugitive'
 " COC Plugin for language server
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " Syntax highlighting plugin for typescript
-Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'HerringtonDarkholme/yats.vim'
+Plug 'leafgarland/typescript-vim'
 " Theme plugin
 Plug 'morhetz/gruvbox'
 " Fuzzy finder plugin
@@ -36,9 +38,23 @@ Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app & yarn install'  }
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
+Plug 'udalov/kotlin-vim'
+Plug 'arcticicestudio/nord-vim' "New theme
+Plug 'christoomey/vim-tmux-navigator'
 " Initialize plugin system
 call plug#end()
 
+
+" Theme and colorscheme settings
+
+" set background=dark
+" colorscheme onehalfdark
+" let g:airline_theme='onehalfdark'
+" set termguicolors
+set background=dark
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme gruvbox
+" colorscheme nord 
 
 " General settings
 set encoding=utf-8
@@ -119,15 +135,6 @@ set signcolumn=yes
 " Treat <li> and <p> tags like the block tags they are
 let g:html_indent_tags = 'li\|p'
 
-" Theme and colorscheme settings
-
-" set background=dark
-" colorscheme onehalfdark
-" let g:airline_theme='onehalfdark'
-
-set background=dark
-let g:gruvbox_contrast_dark = 'hard'
-colorscheme gruvbox
 
 augroup vimrcEx
   autocmd!
@@ -205,11 +212,13 @@ nnoremap <silent> <Leader>gt :TestVisit<CR>
 nnoremap <Leader>r :RunInInteractiveShell<Space>
 
 " Quicker window movement
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-h> <C-w>h
-nnoremap <C-l> <C-w>l
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-l> <C-w>l
 
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
 
 " Move between linting errors
 nnoremap ]r :ALENextWrap<CR>
