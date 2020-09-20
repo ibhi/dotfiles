@@ -439,3 +439,16 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 " leave from insert mode
 let g:mkdp_refresh_slow = 1
 let g:mkdp_markdown_css = '~/.vim/markdown/github-markdown.css'
+
+
+syntax match div "//" conceal cchar=÷
+syntax match mul "*" conceal cchar=×
+syntax match eq "==" conceal cchar=≣
+syntax match neq "!=" conceal cchar=≠
+syntax match gteq ">=" conceal cchar=≥
+syntax match lteq "<=" conceal cchar=≤
+syntax match arrow "->" conceal cchar=→
+setlocal conceallevel=1
+
+" Disable indentLine plugin concealing quotes in json
+let g:indentLine_setConceal = 0
