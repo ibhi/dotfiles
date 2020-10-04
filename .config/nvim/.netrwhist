@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/Users/ibrahim/.config/nvim/plug-config'
+let g:netrw_dirhist_8='/Users/ibrahim/.config/nvim'
+let g:netrw_dirhist_7='/Users/ibrahim/.config/nvim/plug-config'
+let g:netrw_dirhist_6='/Users/ibrahim/.config/nvim'
+let g:netrw_dirhist_5='/Users/ibrahim/.config/nvim/plug-config'
+let g:netrw_dirhist_4='/Users/ibrahim/.config/nvim'
+let g:netrw_dirhist_3='/Users/ibrahim/projects/senses/senses/core/src'
+let g:netrw_dirhist_2='/Users/ibrahim/projects/senses/senses/core/src/http-client/src'
+let g:netrw_dirhist_1='/Users/ibrahim/projects/senses/senses/core/src/http-client'
+let g:netrw_dirhist_0='/Users/ibrahim/projects/senses/senses/core/src'
